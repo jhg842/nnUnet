@@ -732,61 +732,61 @@ class nnUNetTrainer(object):
 
         transforms.append(RandomTransform(
             GaussianNoiseTransform(
-                noise_variance=(0, 0.1),
+                noise_variance=(0, 0.2),
                 p_per_channel=1,
                 synchronize_channels=True
-            ), apply_probability=0.1
-        ))
-        transforms.append(RandomTransform(
-            GaussianBlurTransform(
-                blur_sigma=(0.5, 1.),
-                synchronize_channels=False,
-                synchronize_axes=False,
-                p_per_channel=0.5, benchmark=True
             ), apply_probability=0.2
         ))
         transforms.append(RandomTransform(
+            GaussianBlurTransform(
+                blur_sigma=(0.25, 1.5),
+                synchronize_channels=False,
+                synchronize_axes=False,
+                p_per_channel=1, benchmark=True
+            ), apply_probability=0.4
+        ))
+        transforms.append(RandomTransform(
             MultiplicativeBrightnessTransform(
-                multiplier_range=BGContrast((0.75, 1.25)),
+                multiplier_range=BGContrast((0.5, 1.5)),
                 synchronize_channels=False,
                 p_per_channel=1
-            ), apply_probability=0.15
+            ), apply_probability=0.3
         ))
         transforms.append(RandomTransform(
             ContrastTransform(
-                contrast_range=BGContrast((0.75, 1.25)),
+                contrast_range=BGContrast((0.5, 1.5)),
                 preserve_range=True,
                 synchronize_channels=False,
                 p_per_channel=1
-            ), apply_probability=0.15
+            ), apply_probability=0.3
         ))
         transforms.append(RandomTransform(
             SimulateLowResolutionTransform(
-                scale=(0.5, 1),
+                scale=(0.25, 1),
                 synchronize_channels=False,
                 synchronize_axes=True,
                 ignore_axes=ignore_axes,
                 allowed_channels=None,
-                p_per_channel=0.5
-            ), apply_probability=0.25
+                p_per_channel=1
+            ), apply_probability=0.3
         ))
         transforms.append(RandomTransform(
             GammaTransform(
-                gamma=BGContrast((0.7, 1.5)),
+                gamma=BGContrast((0.5, 1.75)),
                 p_invert_image=1,
                 synchronize_channels=False,
                 p_per_channel=1,
                 p_retain_stats=1
-            ), apply_probability=0.1
+            ), apply_probability=0.2
         ))
         transforms.append(RandomTransform(
             GammaTransform(
-                gamma=BGContrast((0.7, 1.5)),
+                gamma=BGContrast((0.5, 1.75)),
                 p_invert_image=0,
                 synchronize_channels=False,
                 p_per_channel=1,
                 p_retain_stats=1
-            ), apply_probability=0.3
+            ), apply_probability=0.4
         ))
         if mirror_axes is not None and len(mirror_axes) > 0:
             transforms.append(
